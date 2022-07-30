@@ -10,3 +10,7 @@ using CSS to make the page more presentable for the user
 
 ## Javascript
 Using Javascript in order to fetch or API from One Call API webiste, that will provide the current weather conditions in the chosen city
+
+## buttons
+created a input field for users to input a city they will like to search, once city is inputted users are to press "Press Me!"
+created a button for users to clear their recent city searches. button will say "Clear Recents"

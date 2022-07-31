@@ -31,5 +31,20 @@ function getStoredWeather() {
 }
 function getCurrentPosition (inputsearch) {
     var apiUrl = "api.openweathermap.org/data/2.5/forecast?q=" + inputsearch + "&limit=1&appid=" + apiKey;
+    fetch(apiUrl).then(function(response) {
+        if (response.ok){
+            response.json().then(function(data) {
+                console.log(data);
+                
+                var positionlat = data [0].lat;
+                var positionlon = data [0].lon;
+                nameCity = data [0].name;
+
+                var latitudeString = positionlat.toString();
+                var longitudeString = positionlon.toSting();
+                getForecast(latitudeString, longitudeString);
+            })
+        }
+    })
 
 }

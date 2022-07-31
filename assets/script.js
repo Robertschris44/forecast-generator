@@ -17,3 +17,19 @@ for (var i = 0; i < storedCities.lenght; i ++) {
     nameCityEl.text(city);
     $("#list-city").append(nameCityEl);
 }
+
+searchBtn.click(function() {
+    console.log ("btnclicked")
+    lookupInput = $("#lookupInput").val().trim();
+    var recentlySavedCities = JSON.parse(localStorage.getItem("storedCites")) || []
+    recentlySavedCities.push(inputsearch)
+    localStorage.setItem("storedCities", JSON.stringify(recentlySavedCities))
+    getCurrentPosition(inputsearch);
+});
+function getStoredWeather() {
+    getCurrentPosition($(this).text())
+}
+function getCurrentPosition (inputsearch) {
+    var apiUrl = "api.openweathermap.org/data/2.5/forecast?q=" + inputsearch + "&limit=1&appid=" + apiKey;
+
+}

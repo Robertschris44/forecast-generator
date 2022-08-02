@@ -30,7 +30,7 @@ function getStoredWeather() {
     getCurrentPosition($(this).text())
 }
 function getCurrentPosition (lookupInput) {
-    var apiUrl = "api.openweathermap.org/data/2.5/forecast?q=" + lookupInput + "&limit=1&appid=" + apiKey;
+    var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + lookupInput + "&limit=1&appid=" + apiKey;
     fetch(apiUrl).then(function(response) {
         if (response.ok){
             response.json().then(function(data) {

@@ -20,17 +20,17 @@ for (var i = 0; i < storedCities.lenght; i ++) {
 
 searchBtn.click(function() {
     console.log ("btnclicked")
-    lookupInput = $("#lookupInput").val(); //set value 
+    lookupInput = $("#inputcity").val().trim(); //set value 
     var recentlySavedCities = JSON.parse(localStorage.getItem("storedCites")) || []
-    recentlySavedCities.push(inputsearch)
+    recentlySavedCities.push(lookupInput)
     localStorage.setItem("storedCities", JSON.stringify(recentlySavedCities))
-    getCurrentPosition(inputsearch);
+    getCurrentPosition(lookupInput);
 });
 function getStoredWeather() {
     getCurrentPosition($(this).text())
 }
-function getCurrentPosition (inputsearch) {
-    var apiUrl = "api.openweathermap.org/data/2.5/forecast?q=" + inputsearch + "&limit=1&appid=" + apiKey;
+function getCurrentPosition (lookupInput) {
+    var apiUrl = "api.openweathermap.org/data/2.5/forecast?q=" + lookupInput + "&limit=1&appid=" + apiKey;
     fetch(apiUrl).then(function(response) {
         if (response.ok){
             response.json().then(function(data) {
@@ -66,9 +66,19 @@ function getForecast(lat,lon) {
                 var nowHumEl = $ ("#todayhum");
                 nowHumEl.text(data.current.wind_speed);
                 var nowUvEl = $ ("#todayuvindex");
-                nowUvEl.text(data.current.wind_speed);
+                nowUvEl.text(data.current.uvi);
+
+                for (var i =0; i < periodicDivs.length; i ++) {
+                    var dateFormat = new Date (data.daily[i + 1].dt * 1000).toLocaleDateString("en-US");
+                    periodicDivs[i].find(".dateContent").text(dateFormat);
+                    periodicDivs[i].find(".tempContent").text(data.daily[i +1].temp.day);
+                    periodicDivs[i].find(".windContent").text(data.daily[i +1].wind_speed);
+                    periodicDivs[i].find(".humidityContent").text(data.daily[i +1].humidty);
+                    periodicDivs[i].find(".contentUV").text(data.daily[i +1].uvi);
+                }
             })
         }
     })
 
-}
+};
+$("#list").on("click", "list-group-item", getStoredWeather)

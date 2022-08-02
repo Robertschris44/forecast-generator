@@ -20,7 +20,7 @@ for (var i = 0; i < storedCities.lenght; i ++) {
 
 searchBtn.click(function() {
     console.log ("btnclicked")
-    lookupInput = $("#lookupInput").val().trim();
+    lookupInput = $("#lookupInput").val(); //set value 
     var recentlySavedCities = JSON.parse(localStorage.getItem("storedCites")) || []
     recentlySavedCities.push(inputsearch)
     localStorage.setItem("storedCities", JSON.stringify(recentlySavedCities))
@@ -43,6 +43,30 @@ function getCurrentPosition (inputsearch) {
                 var latitudeString = positionlat.toString();
                 var longitudeString = positionlon.toSting();
                 getForecast(latitudeString, longitudeString);
+            });
+        } else {
+            alert("Not Found");
+        }
+    });
+
+};
+
+function getForecast(lat,lon) {
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + "&exclude=minutely,hourly,alerts,&units=imperial&appid=" + apiKey;
+    fetch(apiUrl).then(function(response) {
+        if (response.ok) {
+            response.json().then(function(data) {
+                console.log(data);
+                var nowCityEl = $("#currentname");
+                 nowCityEl.text(nameCity.toUpperCase()+ todayDate);
+                var nowTempEl = $("todaytemp");
+                nowTempEl.text(data.current.temp);
+                var nowWindEl = $ ("#todaywind");
+                nowWindEl.text(data.current.wind_speed);
+                var nowHumEl = $ ("#todayhum");
+                nowHumEl.text(data.current.wind_speed);
+                var nowUvEl = $ ("#todayuvindex");
+                nowUvEl.text(data.current.wind_speed);
             })
         }
     })

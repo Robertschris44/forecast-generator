@@ -36,12 +36,12 @@ function getCurrentPosition (lookupInput) {
             response.json().then(function(data) {
                 console.log(data);
                 
-                var positionlat = data [0].lat;
-                var positionlon = data [0].lon;
-                nameCity = data [0].name;
+                var positionlat = data.lat;
+                var positionlon = data.lon;
+                nameCity = data.name;
 
                 var latitudeString = positionlat.toString();
-                var longitudeString = positionlon.toSting();
+                var longitudeString = positionlon.toString();
                 getForecast(latitudeString, longitudeString);
             });
         } else {
@@ -52,7 +52,7 @@ function getCurrentPosition (lookupInput) {
 };
 
 function getForecast(lat,lon) {
-    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + "&exclude=minutely,hourly,alerts,&units=imperial&appid=" + apiKey;
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly,alerts,&units=imperial&appid=" + apiKey;
     fetch(apiUrl).then(function(response) {
         if (response.ok) {
             response.json().then(function(data) {
